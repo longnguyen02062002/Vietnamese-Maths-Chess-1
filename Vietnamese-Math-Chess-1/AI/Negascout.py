@@ -19,11 +19,10 @@ class Negascout(AI):
             next_moves = gs.getAllPossibleMoves()
             score = - self.findMoveNegaScout(gs, next_moves, depth - 1, -beta, -alpha, -turn)
             gs.undoMove()
-            if score > bestValue:
-                bestValue = score
-                if depth == self.DEPTH:
-                    self.next_move = move
-                alpha = max(alpha, bestValue)
-                if alpha >= beta:
-                    break
+            if score >= beta:
+                return score
+            if score > alpha:
+                alpha = score
+                beta = alpha + 1
+                bestValue = alpha
         return bestValue
